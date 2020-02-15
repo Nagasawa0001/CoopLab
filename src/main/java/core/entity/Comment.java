@@ -5,11 +5,11 @@ import java.sql.Timestamp;
 import lombok.Data;
 
 @Data
-public class TopicComment {
+public class Comment {
 
 	private long id;
 	private String content;
-	private long topicId;
-	private Timestamp created_at;
-	private Timestamp updated_at;
+	private long projectId;
+	private long projectMemberId;
+	private Timestamp createdDate;
 }

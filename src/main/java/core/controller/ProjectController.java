@@ -14,51 +14,51 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import core.entity.Topic;
-import core.entity.TopicComment;
-import core.service.TopicService;
+import core.entity.Comment;
+import core.entity.Project;
+import core.service.ProjectService;
 
 @RestController
-@RequestMapping(path = "/topic")
+@RequestMapping(path = "/project")
 @CrossOrigin(origins = {"*"})
-public class TopicController {
+public class ProjectController {
 
 	@Autowired
-	private TopicService topicService;
+	private ProjectService projectService;
 
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
-	public List<Topic> getTopicList() {
-		return topicService.getTopicList();
+	public List<Project> getProjectList() {
+		return projectService.getProjectList();
 	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public void postTopic(@RequestBody @Validated Topic form) {
-		topicService.postTopic(form);
+	public void postProject(@RequestBody @Validated Project form) {
+		projectService.postProject(form);
 	}
 
 	@DeleteMapping("/delete/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void deleteTopic(long topicId) {
-		topicService.deleteTopic(topicId);
+	public void deleteProject(long topicId) {
+		projectService.deleteProject(topicId);
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping("/chat")
 	@ResponseStatus(HttpStatus.OK)
-	public TopicComment getTopicCommentList(@RequestBody long topicId) {
-		return topicService.getTopicComment(topicId);
+	public List<Comment> getCommentList(@RequestBody long projectId) {
+		return projectService.getComment(projectId);
 	}
 
-	@PostMapping("/comment")
+	@PostMapping("/chat")
 	@ResponseStatus(HttpStatus.CREATED)
-	public void postTopicComment(@RequestBody @Validated TopicComment form) {
-		topicService.postTopicComment(form);
+	public void postComment(@RequestBody @Validated Comment form) {
+		projectService.postComment(form);
 	}
 
-	@DeleteMapping("/comment/{id}")
+	@DeleteMapping("/chat/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void deleteTopicComment(long topicCommentId) {
-		topicService.deleteTopicComment(topicCommentId);
+	public void deleteComment(long topicCommentId) {
+		projectService.deleteComment(topicCommentId);
 	}
 }
