@@ -8,15 +8,19 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import core.entity.Category;
 import core.entity.Comment;
-import core.entity.Project;
+import core.entity.ProjectJoinLanguage;
 
 @Mapper
 public interface ProjectMapper {
 
 	//プロジェクト一覧を取得
-	@Select("SELECT * FROM projects")
-	List<Project> getProjectList();
+	@Select("SELECT * FROM projects INNER JOIN languages ON projects.languageId1 = languages.id")
+	List<ProjectJoinLanguage> getProjectList();
+
+	@Select("SELECT * FROM categories")
+	Category getCategory();
 
 	//プロジェクトを作成を投稿
 	@Insert("INSERT INTO projects ("

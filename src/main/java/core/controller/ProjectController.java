@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import core.entity.Comment;
 import core.entity.Project;
+import core.entity.ProjectJoinLanguage;
 import core.service.ProjectService;
 
 @RestController
@@ -28,7 +29,7 @@ public class ProjectController {
 
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
-	public List<Project> getProjectList() {
+	public List<ProjectJoinLanguage> getProjectList() {
 		return projectService.getProjectList();
 	}
 

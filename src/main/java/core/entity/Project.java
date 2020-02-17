@@ -22,5 +22,6 @@ public class Project {
 	private long administratorId;
 	private long progressStatus;
 	private String password;
-	private Timestamp createdDate;
+	private Timestamp createDate;
+	private Category category;
 }

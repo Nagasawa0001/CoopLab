@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import core.entity.Comment;
 import core.entity.Project;
+import core.entity.ProjectJoinLanguage;
 import core.iservice.IProjectService;
 import core.mapper.ProjectMapper;
 
@@ -22,7 +23,7 @@ public class ProjectService implements IProjectService {
 //	private CommentRepository commentRepository;
 
 	@Override
-	public List<Project> getProjectList() {
+	public List<ProjectJoinLanguage> getProjectList() {
 		return projectMapper.getProjectList();
 	}
 

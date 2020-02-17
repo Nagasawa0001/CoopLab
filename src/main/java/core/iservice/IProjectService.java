@@ -4,10 +4,11 @@ import java.util.List;
 
 import core.entity.Comment;
 import core.entity.Project;
+import core.entity.ProjectJoinLanguage;
 
 public interface IProjectService {
 
-	List<Project> getProjectList();
+	List<ProjectJoinLanguage> getProjectList();
 	public void postProject(Project form);
 	public void deleteProject(long projectId);
 
