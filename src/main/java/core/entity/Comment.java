@@ -11,5 +11,6 @@ public class Comment {
 	private String content;
 	private long projectId;
 	private long projectMemberId;
+	private String memberName;
 	private Timestamp createdDate;
 }

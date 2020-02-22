@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import core.entity.Comment;
 import core.entity.Project;
-import core.entity.ProjectJoinLanguage;
+import core.entity.join.ProjectLanguageCategory;
 import core.iservice.IProjectService;
 import core.mapper.ProjectMapper;
 
@@ -23,8 +23,13 @@ public class ProjectService implements IProjectService {
 //	private CommentRepository commentRepository;
 
 	@Override
-	public List<ProjectJoinLanguage> getProjectList() {
-		return projectMapper.getProjectList();
+	public ProjectLanguageCategory getProjectList() {
+		ProjectLanguageCategory projectLanguageCategory = new ProjectLanguageCategory();
+		projectLanguageCategory.setProjectList(projectMapper.getProjectList());
+		projectLanguageCategory.setCategoryList(projectMapper.getCategoryList());
+		projectLanguageCategory.setLanguageList(projectMapper.getLanguageList());
+
+		return projectLanguageCategory;
 	}
 
 	@Override

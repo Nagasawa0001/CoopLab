@@ -12,10 +12,6 @@ public class TempUser {
 	private String email;
 	private String password;
 	private String introduce;
-	private long projectId;
-	private long userId;
-	private long joinApproval;
-	private long adminId;
 	private Timestamp createDate;
 	private Timestamp updateDate;
 	private String uuid;

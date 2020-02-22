@@ -10,7 +10,8 @@ public class ProjectMember {
 	private long id;
 	private long projectId;
 	private long userId;
-	private long joinApproval;
+	private String userName;
+	private boolean joinApproval;
 	private long adminId;
 	private Timestamp createDate;
 	private Timestamp updateDate;

@@ -23,7 +23,7 @@ import core.service.ProjectService;
 @RestController
 @RequestMapping(path = "/project")
 @CrossOrigin(origins = {"*"})
-public class ProjectController {
+public class SecurityController {
 
 	@Autowired
 	private ProjectService projectService;
