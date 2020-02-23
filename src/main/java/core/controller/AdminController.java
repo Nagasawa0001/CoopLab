@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import core.entity.Admin;
+import core.service.AdminService;
 
 @RestController
 @RequestMapping(path = "/admin")
@@ -23,26 +24,23 @@ import core.entity.Admin;
 public class AdminController {
 
 	@Autowired
+	AdminService adminService;
 
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
-	public List<Admin> getAdminList() {
-		return null;
-	}
-
-	@GetMapping("/{id}")
-	@ResponseStatus(HttpStatus.OK)
-	public Admin getAdmin(@RequestParam(name = "id", required = false)long id) {
-		return null;
+	public List<Admin> getAdminList(@RequestParam(name = "projectId", required = false) @Validated long projectId) {
+		return adminService.getAdminList(projectId);
 	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public void postAdmin(@RequestBody @Validated Admin form) {
+		adminService.createAdmin(form);
 	}
 
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void deleteAdmin(long topicId) {
+	public void deleteAdmin(long id) {
+		adminService.deleteAdmin(id);
 	}
 }

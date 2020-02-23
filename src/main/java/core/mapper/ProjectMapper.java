@@ -14,7 +14,7 @@ import core.entity.join.ProjectList;
 public interface ProjectMapper {
 
 	//プロジェクトリスト取得
-	@Select("SELECT * FROM projects INNER JOIN languages ON projects.languageId1 = languages.id")
+	@Select("SELECT projects.id, projects.title, languages.imageURL, projects.createDate FROM projects INNER JOIN languages ON projects.languageId1 = languages.id")
 	List<ProjectList> selectProjectList();
 
 	//プロジェクト登録

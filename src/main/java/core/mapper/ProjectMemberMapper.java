@@ -21,5 +21,5 @@ public interface ProjectMemberMapper {
 			+ "(projectId, userId, userName adminId) "
 			+ "VALUES "
 			+ "(#{projectId}, #{userId}, #{userName}, #{adminId})")
-	public void insertProjectMember(@Param("projectId") long projectId, @Param("userId") long userId, @Param("userName") long userName, @Param("adminId") long adminId);
+	public void insertProjectMember(@Param("projectId") long projectId, @Param("userId") long userId, @Param("userName") String userName, @Param("adminId") long adminId);
 }

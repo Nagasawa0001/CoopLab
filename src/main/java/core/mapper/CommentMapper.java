@@ -22,7 +22,7 @@ public interface CommentMapper {
 	@Insert("INSERT INTO comments (content, projectId, projectMemberId) "
 			+ "VALUES "
 			+ "(#{content}, #{projectId}, #{projectMemberId})")
-	public void insertComment(@Param("content") long content, @Param("projectId") long projectId, @Param("projectMemberId") long projectMemberId);
+	public void insertComment(@Param("content") String content, @Param("projectId") long projectId, @Param("projectMemberId") long projectMemberId);
 
 	@Delete("DELETE FROM comments WHERE id=#{id}")
 	public void deleteComment(@Param("id") long id);

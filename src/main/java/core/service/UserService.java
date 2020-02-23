@@ -1,9 +1,12 @@
 package core.service;
 
+import org.springframework.stereotype.Service;
+
 import core.entity.TempUser;
 import core.entity.User;
 import core.iservice.IUserService;
 
+@Service
 public class UserService implements IUserService {
 
 	@Override
