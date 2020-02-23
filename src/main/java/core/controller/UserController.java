@@ -29,14 +29,14 @@ public class UserController {
 		return null;
 	}
 
-	@PostMapping("/register/temp")
+	@PostMapping("/temp")
 	@ResponseStatus(HttpStatus.CREATED)
-	public void registerTempUser(@RequestBody @Validated TempUser form) {
+	public void postTempUser(@RequestBody @Validated TempUser form) {
 	}
 
-	@PostMapping("/register/{id}")
+	@PostMapping
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void registerUser(@PathVariable(name = "uuid", required = false) String uuid) {
+	public void postUser(@PathVariable(name = "uuid", required = false) String uuid) {
 	}
 
 	@DeleteMapping("/{id}")

@@ -1,7 +1,5 @@
 package core.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import core.entity.Comment;
 import core.entity.Project;
 import core.entity.join.ProjectLanguageCategory;
 import core.service.ProjectService;
@@ -34,9 +31,9 @@ public class ProjectController {
 		return projectService.getProjectList();
 	}
 
-	@GetMapping("/detail")
+	@GetMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public ProjectLanguageCategory getProjecDetail(@RequestParam(name = "id", required = false)long id) {
+	public ProjectLanguageCategory getProjec(@RequestParam(name = "id", required = false)long id) {
 		System.out.println(id);
 		return projectService.getProjectList();
 	}
@@ -51,23 +48,5 @@ public class ProjectController {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deleteProject(long topicId) {
 		projectService.deleteProject(topicId);
-	}
-
-	@GetMapping("/chat")
-	@ResponseStatus(HttpStatus.OK)
-	public List<Comment> getCommentList(@RequestBody long projectId) {
-		return projectService.getComment(projectId);
-	}
-
-	@PostMapping("/chat")
-	@ResponseStatus(HttpStatus.CREATED)
-	public void postComment(@RequestBody @Validated Comment form) {
-		projectService.postComment(form);
-	}
-
-	@DeleteMapping("/chat/{id}")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void deleteComment(long topicCommentId) {
-		projectService.deleteComment(topicCommentId);
 	}
 }
