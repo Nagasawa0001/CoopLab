@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import core.common.Common;
 import core.entity.Admin;
 import core.service.AdminService;
 
@@ -29,6 +30,8 @@ public class AdminController {
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
 	public List<Admin> getAdminList(@RequestParam(name = "projectId", required = false) @Validated long projectId) {
+		Common common = new Common();
+		System.out.println(common.generatePassword());
 		return adminService.getAdminList(projectId);
 	}
 

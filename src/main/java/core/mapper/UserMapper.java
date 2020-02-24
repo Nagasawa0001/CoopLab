@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import core.entity.TempUser;
 import core.entity.User;
 
 @Mapper
@@ -20,11 +21,14 @@ public interface UserMapper {
 
 	//仮ユーザー削除
 	@Delete("DELETE FROM tempUsers WHERE uuid=#{uuid}")
-	public void deleteTempUser(@Param("uuid") long uuid);
+	public void deleteTempUser(@Param("uuid") String uuid);
 
 	//仮ユーザー取得 + 存在チェック
-	@Select("SELECT * FROM tempUsers WHERE uuid=#{uuid})")
-	public User selectTempUser(@Param("uuid") String uuid);
+	@Select("SELECT * FROM tempUsers WHERE uuid=#{uuid}")
+	public TempUser selectTempUser(@Param("uuid") String uuid);
+
+	@Select("SELECT * FROM users WHERE id=#{id}")
+	public User selectUser(@Param("id") long id);
 
 	//本ユーザー登録
 	@Insert("INSERT INTO users "
