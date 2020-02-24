@@ -19,6 +19,8 @@ public class UserService implements IUserService {
 
 	@Autowired
 	UserMapper userMapper;
+
+	@Autowired
 	MailSender mailSender;
 
 	@Override
@@ -43,7 +45,10 @@ public class UserService implements IUserService {
 		message.setSubject("認証メールの受信について");
 		message.setText("ご登録いただいたメールアドレスへ認証メールをお送りいたしました。"
 				+ "下記URLよりユーザー認証を行ってください。"
-				+ "http://localhost:8080/user/" + form.getUuid());
+				+ "http://localhost:8080/user/" + strUUID);
+		System.out.println(message);
+
+		mailSender.send(message);
 
 	}
 
