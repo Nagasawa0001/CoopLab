@@ -33,9 +33,9 @@ public class ProjectController {
 
 	@GetMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public ProjectLanguageCategory getProjec(@RequestParam(name = "id", required = false)long id) {
+	public Project getProjectDetail(@RequestParam(name = "id", required = false)long id) {
 		System.out.println(id);
-		return projectService.getProjectList();
+		return projectService.getProjectDetail(id);
 	}
 
 	@PostMapping

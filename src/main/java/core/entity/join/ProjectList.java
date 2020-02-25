@@ -10,5 +10,6 @@ public class ProjectList {
 	private long id;
 	private String title;
 	private String imageURL;
-	private Timestamp createDate;
+	private long currentNumber;
+	private Timestamp createdDate;
 }
