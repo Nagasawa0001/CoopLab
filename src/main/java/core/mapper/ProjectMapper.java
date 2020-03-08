@@ -8,19 +8,20 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
-import core.entity.Language;
 import core.entity.Project;
-import core.entity.join.ProjectList;
 
 @Mapper
 public interface ProjectMapper {
 
 	//プロジェクトリスト取得
-	@Select("SELECT projects.id, projects.title, languages.imageURL, projects.currentNumber, projects.createdDate "
+	@Select("SELECT projects.id, projects.title, projects.discription, projects.currentUser, projects.currentUser, projects.progressStatus, projects.createdDate "
 			+ "FROM projects "
-			+ "INNER JOIN languages "
-			+ "ON projects.languageId1 = languages.id;")
-	public List<ProjectList> selectProjectList();
+			+ "LEFT OUTER JOIN users_projects "
+			+ "ON projects.id = users_projects.projectId "
+			+ "INNER JOIN users "
+			+ "ON users_projects.userId = users.id "
+			+ "WHERE users_projects.userId = #{userId}")
+	public List<Project> selectProjectList(@Param("userId")long userId);
 
 	//プロジェクト詳細を取得（ユーザー名も取得）
 	@Select("SELECT projects.id, projects.title, projects.discription, projects.requireNumber, projects.administratorId, projects.currentNumber, users.name AS administratorName, projects.createdDate "

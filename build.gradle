@@ -23,6 +23,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.0.1'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	compile('org.springframework.security:spring-security-web')
+    compile('org.springframework.security:spring-security-config')
+    compile('org.thymeleaf.extras:thymeleaf-extras-springsecurity5')
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'mysql:mysql-connector-java'
 	annotationProcessor 'org.projectlombok:lombok'

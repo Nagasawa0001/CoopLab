@@ -11,13 +11,17 @@ import core.entity.User;
 
 @Mapper
 public interface UserMapper {
+	//ログイン
+	@Select("SELECT * FROM users WHERE email=#{email}")
+	public User findByEmail(@Param("email") String email);
+
 	//仮ユーザー登録
 	@Insert("INSERT INTO tempUsers "
-			+ "(name, email, password, introduce, uuid) "
+			+ "(name, email, password, uuid) "
 			+ "VALUES "
-			+ "(#{name}, #{email}, #{password}, #{introduce}, #{uuid})")
+			+ "(#{name}, #{email}, #{password}, #{uuid})")
 	public void insertTempUser(@Param("name") String name, @Param("email") String email, @Param("password") String password,
-								@Param("introduce") String introduce, @Param("uuid") String uuid);
+							@Param("uuid") String uuid);
 
 	//仮ユーザー削除
 	@Delete("DELETE FROM tempUsers WHERE uuid=#{uuid}")
@@ -32,11 +36,10 @@ public interface UserMapper {
 
 	//本ユーザー登録
 	@Insert("INSERT INTO users "
-			+ "(name, email, password, introduce, uuid) "
+			+ "(name, email, password) "
 			+ "VALUES "
-			+ "(#{name}, #{email}, #{password}, #{introduce})")
-	public void insertUser(@Param("name") String name, @Param("email") String email, @Param("password") String password,
-								@Param("introduce") String introduce);
+			+ "(#{name}, #{email}, #{password})")
+	public void insertUser(@Param("name") String name, @Param("email") String email, @Param("password") String password);
 
 	// 本ユーザー削除
 	@Delete("DELETE FROM users WHERE id=#{id}")

@@ -19,13 +19,14 @@ import core.entity.User;
 import core.service.UserService;
 
 @RestController
-@RequestMapping(path = "/user")
+@RequestMapping(path = "/users")
 @CrossOrigin(origins = {"*"})
 public class UserController {
 
 	@Autowired
 	UserService userService;
 
+	// プロフィール取得
 	@GetMapping("/profile")
 	@ResponseStatus(HttpStatus.OK)
 	public User getProfile(@RequestParam(name = "id") @Validated long id) {
@@ -33,18 +34,23 @@ public class UserController {
 		return userService.getUser(id);
 	}
 
+	// 一時ユーザー登録
 	@PostMapping("/temp")
 	@ResponseStatus(HttpStatus.CREATED)
 	public void postTempUser(@RequestBody @Validated TempUser form) {
+		System.out.println(form);
 		userService.createTempUser(form);
 	}
 
-	@PostMapping("/{uuid}")
+	// ユーザー登録認証メールクリック時
+	@GetMapping("/validate/{uuid}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void postUser(@PathVariable(name = "uuid", required = false) String uuid) {
+		System.out.println(uuid);
 		userService.createUser(uuid);
 	}
 
+	// ユーザー登録
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deleteUser(@RequestBody @Validated long id) {

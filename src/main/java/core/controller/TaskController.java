@@ -14,26 +14,25 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import core.entity.ProjectMember;
-import core.service.ProjectMemberService;
+import core.entity.ParentTask;
+import core.service.TaskService;
 
 @RestController
 @RequestMapping(path = "/project/member")
 @CrossOrigin(origins = {"*"})
-public class ProjectMemberController {
+public class TaskController {
 
 	@Autowired
-	ProjectMemberService projectMemberService;
+	TaskService projectMemberService;
 
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
-	public List<ProjectMember> getProjectMemberList(@RequestParam(name = "projectId") @Validated long projectId) {
-		return projectMemberService.getProjectMember(projectId);
+	public List<ParentTask> getProjectMemberList(@RequestParam(name = "projectId") @Validated long projectId) {
+		return null;
 	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public void postProjectMember(@RequestBody @Validated ProjectMember form) {
-		projectMemberService.createProjectMember(form);
+	public void postProjectMember(@RequestBody @Validated ParentTask form) {
 	}
 }

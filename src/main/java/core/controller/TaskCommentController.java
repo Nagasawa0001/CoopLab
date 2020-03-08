@@ -15,32 +15,30 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import core.entity.Comment;
-import core.service.CommentService;
+import core.entity.TaskComment;
+import core.service.TaskCommentService;
 
 @RestController
 @RequestMapping(path = "/chat")
 @CrossOrigin(origins = {"*"})
-public class CommentController {
+public class TaskCommentController {
 
 	@Autowired
-	CommentService commentService;
+	TaskCommentService commentService;
 
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
-	public List<Comment> getCommentList(@RequestParam(name = "projectId") @Validated long projectId) {
-		return commentService.getComment(projectId);
+	public List<TaskComment> getCommentList(@RequestParam(name = "projectId") @Validated long projectId) {
+		return null;
 	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public void postComment(@RequestBody @Validated Comment form) {
-		commentService.postComment(form);
+	public void postComment(@RequestBody @Validated TaskComment form) {
 	}
 
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deleteComment(@RequestParam(name = "id") @Validated long id) {
-		commentService.deleteComment(id);
 	}
 }

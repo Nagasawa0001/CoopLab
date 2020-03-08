@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import core.entity.Project;
-import core.entity.join.ProjectLanguageCategory;
+import core.entity.join.ProjectMessage;
 import core.service.ProjectService;
 
 @RestController
@@ -23,30 +23,33 @@ import core.service.ProjectService;
 public class ProjectController {
 
 	@Autowired
-	private ProjectService projectService;
+	ProjectService projectService;
 
-	@GetMapping
+	// プロジェクト一覧取得
+	@GetMapping("/list")
 	@ResponseStatus(HttpStatus.OK)
-	public ProjectLanguageCategory getProjectList() {
-		return projectService.getProjectList();
+	public ProjectMessage getProjectList(@RequestParam(name = "userId", required = false)long userId) {
+		System.out.println(userId);
+		return projectService.getProjectList(userId);
 	}
 
-	@GetMapping("/{id}")
+	// プロジェクト詳細取得 + 親タスク一覧取得
+	@GetMapping("{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public Project getProjectDetail(@RequestParam(name = "id", required = false)long id) {
 		System.out.println(id);
-		return projectService.getProjectDetail(id);
+		return null;
 	}
 
+	// プロジェクト作成
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public void postProject(@RequestBody @Validated Project form) {
-		projectService.postProject(form);
 	}
 
+	// プロジェクト削除
 	@DeleteMapping("/delete/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deleteProject(long topicId) {
-		projectService.deleteProject(topicId);
 	}
 }
