@@ -12,8 +12,8 @@ public class JoinMessage {
 	private long fromUserId;
 	private String fromUserName;
 	private long projectId;
-	private String projectName;
-	private String title;
+	private String projectTitle;
+	private String messageTitle;
 	private String content;
 	private Timestamp createdDate;
 	private boolean isConfirmed;
