@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import core.entity.join.JoinMessage;
 
@@ -19,4 +20,8 @@ public interface MessageMapper {
 			+ "ON messages.projectId = projects.id "
 			+ "WHERE messages.toUserId = #{userId}")
 	public List<JoinMessage> selectMessageList(@Param("userId")long userId);
+
+	// メッセージ確認更新
+	@Update("UPDATE messages SET isConfirmed = true WHERE id = #{id} AND toUserId = #{toUserId}")
+	public void updateMessageStatus(@Param("id")long id, @Param("toUserId")long toUserId);
 }

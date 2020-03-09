@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import core.entity.Project;
 import core.entity.join.ProjectMessage;
+import core.entity.join.ProjectParentTask;
 import core.service.ProjectService;
 
 @RestController
@@ -34,22 +35,30 @@ public class ProjectController {
 	}
 
 	// プロジェクト詳細取得 + 親タスク一覧取得
-	@GetMapping("{id}")
+	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
-	public Project getProjectDetail(@RequestParam(name = "id", required = false)long id) {
-		System.out.println(id);
-		return null;
+	public ProjectParentTask getProjectDetail(@RequestParam(name = "id", required = false)long id) {
+		return projectService.getProjectDetail(id);
+	}
+
+	// プロジェクト名前検索
+	@GetMapping("/search")
+	@ResponseStatus(HttpStatus.OK)
+	public ProjectMessage searchProjectByTitle(@RequestParam(name = "userId", required = false)long userId, @RequestParam(name = "title", required = false)String title) {
+		return projectService.searchProjectByTitle(userId, title);
 	}
 
 	// プロジェクト作成
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public void postProject(@RequestBody @Validated Project form) {
+		projectService.createProject(form);
 	}
 
 	// プロジェクト削除
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void deleteProject(long topicId) {
+	public void deleteProject(long projectId) {
+		projectService.deleteProject(projectId);
 	}
 }

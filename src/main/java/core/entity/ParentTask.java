@@ -8,7 +8,7 @@ import lombok.Data;
 public class ParentTask {
 
 	private long id;
-	private long parentTaskId;
+	private long projectId;
 	private String title;
 	private String content;
 	private long creatorId;
