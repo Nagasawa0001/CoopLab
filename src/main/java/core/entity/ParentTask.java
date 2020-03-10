@@ -12,6 +12,7 @@ public class ParentTask {
 	private String title;
 	private String content;
 	private long creatorId;
+	private String creatorName;
 	private long progressStatus;
 	private Timestamp createdDate;
 	private Timestamp updatedDate;
