@@ -7,23 +7,30 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
-import core.entity.ParentTask;
+import core.entity.TaskComment;
 
 @Mapper
 public interface TaskCommentMapper {
-	//プロジェクト一覧を取得
-	@Select("SELECT comments.id, comments.content, comments.projectId, comments.projectMemberId, projectMembers.userName, comments.createdDate "
-			+ "FROM comments "
-			+ "LEFT OUTER JOIN projectMembers "
-			+ "ON projectMembers.id = comments.projectMemberId WHERE comments.projectId=#{projectId}")
-	List<ParentTask> selectComment(@Param("projectId") long projectId);
+	//タスクコメント一覧を取得
+	@Select("SELECT taskComments.id, taskComments.childTaskId, taskComments.content, taskComments.creatorId, users.name AS creatorName, taskComments.createdDate, taskComments.updatedDate "
+			+ "FROM taskComments "
+			+ "INNER JOIN users "
+			+ "ON taskComments.creatorId = users.id "
+			+ "WHERE taskComments.childTaskId = #{childTaskId}")
+	List<TaskComment> selectComment(@Param("childTaskId") long childTaskId);
 
-	@Insert("INSERT INTO comments (content, projectId, projectMemberId) "
-			+ "VALUES "
-			+ "(#{content}, #{projectId}, #{projectMemberId})")
-	public void insertComment(@Param("content") String content, @Param("projectId") long projectId, @Param("projectMemberId") long projectMemberId);
+	// タスクコメント投稿
+	@Insert("INSERT INTO taskComments (childTaskId, content, creatorId) "
+			+ "VALUES (#{childTaskId}, #{content}, #{creatorId})")
+	public void insertTaskComment(@Param("childTaskId") long childTaskId, @Param("content") String content, @Param("creatorId") long creatorId);
 
-	@Delete("DELETE FROM comments WHERE id=#{id}")
+	// タスクコメント更新（Done or Cancel）
+	@Update("UPDATE taskComments SET content = #{content} WHERE id = #{id}")
+	public void updateChildTaskStatus(@Param("content") String content, @Param("id")long id);
+
+	// タスクコメント削除
+	@Delete("DELETE FROM TaskComments WHERE id=#{id}")
 	public void deleteComment(@Param("id") long id);
 }

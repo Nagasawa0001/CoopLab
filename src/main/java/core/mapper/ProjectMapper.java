@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import core.entity.Project;
 
@@ -53,4 +54,16 @@ public interface ProjectMapper {
 	//プロジェクト削除
 	@Delete("DELETE FROM projects WHERE id = #{id}")
 	public void deleteProject(@Param("id")long id);
+
+	// プロジェクト更新
+	@Update("UPDATE projects SET title = #{title} ,discription = #{discription} WHERE id = #{id}")
+	public void updateProject(@Param("title") String title, @Param("discription") String discription, @Param("id")long id);
+
+	// 進捗ステータス更新
+	@Update("UPDATE projects SET progressStatus = #{progressStatus} WHERE id = #{id}")
+	public void updateProgressStatus(@Param("progressStatus") long progressStatus, @Param("id")long id);
+
+	// ユーザー数プラス１
+	@Update("UPDATE projects SET currentUser = currentUser + 1 WHERE id = #{id}")
+	public void updateSUMCurrentUser(@Param("id")long id);
 }

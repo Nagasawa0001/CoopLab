@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import core.entity.TempUser;
 import core.entity.User;
@@ -44,4 +45,16 @@ public interface UserMapper {
 	// 本ユーザー削除
 	@Delete("DELETE FROM users WHERE id=#{id}")
 	public void deleteUser(@Param("id") long id);
+
+	// パスワードトークン保存
+	@Update("UPDATE users SET token = #{token} WHERE id = #{id}")
+	public void updateToken(@Param("token") String token, @Param("id") long id);
+
+	// パスワード保存
+	@Update("UPDATE users SET password = #{password} WHERE id = #{id}")
+	public void updatePassword(@Param("password") String password, @Param("id") long id);
+
+	// ユーザー情報更新
+	@Update("UPDATE users SET name = #{name}, email = #{email} WHERE id = #{id}")
+	public void updateUser(@Param("name") String name, @Param("email") String email, @Param("id") long id);
 }
