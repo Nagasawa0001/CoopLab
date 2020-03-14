@@ -26,9 +26,9 @@ public interface TaskCommentMapper {
 			+ "VALUES (#{childTaskId}, #{content}, #{creatorId})")
 	public void insertTaskComment(@Param("childTaskId") long childTaskId, @Param("content") String content, @Param("creatorId") long creatorId);
 
-	// タスクコメント更新（Done or Cancel）
+	// タスクコメント更新
 	@Update("UPDATE taskComments SET content = #{content} WHERE id = #{id}")
-	public void updateChildTaskStatus(@Param("content") String content, @Param("id")long id);
+	public void updateTaskComment(@Param("content") String content, @Param("id")long id);
 
 	// タスクコメント削除
 	@Delete("DELETE FROM TaskComments WHERE id=#{id}")

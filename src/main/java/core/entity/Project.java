@@ -14,6 +14,7 @@ public class Project {
 	private long administratorId;
 	private String administratorName;
 	private long progressStatus;
+	private boolean isAccepted;
 	private Timestamp createdDate;
 	private Timestamp updatedDate;
 }

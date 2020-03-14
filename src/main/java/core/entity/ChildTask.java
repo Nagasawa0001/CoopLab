@@ -14,6 +14,7 @@ public class ChildTask {
 	private long creatorId;
 	private String creatorName;
 	private long progressStatus;
+	private long status;
 	private Timestamp createdDate;
 	private Timestamp updatedDate;
 }

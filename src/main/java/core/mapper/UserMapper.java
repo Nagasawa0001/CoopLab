@@ -51,8 +51,12 @@ public interface UserMapper {
 	public void updateToken(@Param("token") String token, @Param("id") long id);
 
 	// パスワード保存
-	@Update("UPDATE users SET password = #{password} WHERE id = #{id}")
-	public void updatePassword(@Param("password") String password, @Param("id") long id);
+	@Update("UPDATE users SET password = #{password} WHERE token = #{token}")
+	public void updatePassword(@Param("password") String password, @Param("token") String token);
+
+	// トークン削除
+	@Update("UPDATE users SET token = NULL WHERE id = #{id}")
+	public void deleteToken(@Param("id")long id);
 
 	// ユーザー情報更新
 	@Update("UPDATE users SET name = #{name}, email = #{email} WHERE id = #{id}")

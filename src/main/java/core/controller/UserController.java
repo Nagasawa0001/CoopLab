@@ -6,6 +6,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,7 +39,6 @@ public class UserController {
 	@PostMapping("/temp")
 	@ResponseStatus(HttpStatus.CREATED)
 	public void postTempUser(@RequestBody @Validated TempUser form) {
-		System.out.println(form);
 		userService.createTempUser(form);
 	}
 
@@ -46,14 +46,34 @@ public class UserController {
 	@GetMapping("/validate/{uuid}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void postUser(@PathVariable(name = "uuid", required = false) String uuid) {
-		System.out.println(uuid);
 		userService.createUser(uuid);
 	}
 
-	// ユーザー登録
+	// ユーザー削除
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deleteUser(@RequestBody @Validated long id) {
 		userService.deleteUser(id);
+	}
+
+	// ユーザー編集
+	@PatchMapping
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void updateUser(@RequestBody @Validated User form) {
+		userService.updateUser(form);
+	}
+
+	// パスワード再設定の認証メール送信
+	@PostMapping("/reset/mail")
+	@ResponseStatus(HttpStatus.CREATED)
+	public String sendResetMail(@RequestBody @Validated User form) {
+		return userService.sendResetMail(form);
+	}
+
+	// パスワード更新処理
+	@PatchMapping("/reset/token/{token}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void updatePassword(@RequestBody @Validated User form) {
+		userService.updatePassword(form);;
 	}
 }

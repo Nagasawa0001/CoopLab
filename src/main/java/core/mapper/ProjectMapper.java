@@ -66,4 +66,8 @@ public interface ProjectMapper {
 	// ユーザー数プラス１
 	@Update("UPDATE projects SET currentUser = currentUser + 1 WHERE id = #{id}")
 	public void updateSUMCurrentUser(@Param("id")long id);
+
+	// ユーザー承認
+	@Update("UPDATE users_projects SET isAccepted = true WHERE userId = #{userId} AND projectId = #{projectId}")
+	public void acceptProjectUser(@Param("userId")long userId, @Param("projectId")long projectId);
 }

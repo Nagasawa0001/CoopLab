@@ -12,6 +12,7 @@ public class Message {
 	private long fromUserId;
 	private String title;
 	private String content;
+	private long projectId;
 	private Timestamp createdDate;
 	private boolean isConfirmed;
 }

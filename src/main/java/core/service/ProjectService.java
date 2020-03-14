@@ -22,7 +22,6 @@ public class ProjectService {
 	TaskMapper taskMapper;
 
 	public ProjectMessage getProjectList(long userId) {
-
 		ProjectMessage listInfo = new ProjectMessage();
 		listInfo.setMessageList(messageMapper.selectMessageList(userId));
 		listInfo.setProjectList(projectMapper.selectProjectList(userId));
@@ -33,23 +32,23 @@ public class ProjectService {
 		ProjectParentTask projectDetailInfo = new ProjectParentTask();
 		projectDetailInfo.setProject(projectMapper.selectProjectDetail(projectId));
 		projectDetailInfo.setParentTasks(taskMapper.selectParentTaskList(projectId));
-
 		return projectDetailInfo;
 	}
 
 	public ProjectMessage searchProjectByTitle(long userId, String title) {
-
 		ProjectMessage listInfo = new ProjectMessage();
 		listInfo.setMessageList(messageMapper.selectMessageList(userId));
 		listInfo.setProjectList(projectMapper.searchProjectByTitle(userId, title));
 		return listInfo;
 	}
 
-
 	public void createProject(Project form) {
 		projectMapper.insertProject(form.getTitle(), form.getDiscription(), form.getAdministratorId());
 	}
 
+	public void updateProject(Project form) {
+		projectMapper.updateProject(form.getTitle(), form.getDiscription(), form.getAdministratorId());
+	}
 
 	public void deleteProject(long projectId) {
 		projectMapper.deleteProject(projectId);
