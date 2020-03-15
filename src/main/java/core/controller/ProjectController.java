@@ -55,12 +55,14 @@ public class ProjectController {
 		projectService.createProject(form);
 	}
 
+	// プロジェクト編集
 	@PatchMapping
 	@ResponseStatus(HttpStatus.OK)
 	public void updateProject(@RequestBody @Validated Project form) {
 		projectService.updateProject(form);
 	}
 
+	// プロジェクト削除
 	@DeleteMapping
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deleteProject(long projectId) {

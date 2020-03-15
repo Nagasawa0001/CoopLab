@@ -6,7 +6,9 @@ import java.util.List;
 import org.passay.CharacterRule;
 import org.passay.EnglishCharacterData;
 import org.passay.PasswordGenerator;
+import org.springframework.stereotype.Component;
 
+@Component
 public class Common {
 	// プロジェクト参加用パスワード生成
 	public String generatePassword() {

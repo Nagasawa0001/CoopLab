@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import core.common.Common;
 import core.entity.LoginUser;
 import core.entity.TempUser;
 import core.entity.User;
@@ -34,6 +35,9 @@ public class UserService implements UserDetailsService {
 
 	@Autowired
 	CommonMapper commonMapper;
+
+	@Autowired
+	Common common;
 
 	public User getUser(long id) {
 		return userMapper.selectUser(id);
@@ -76,21 +80,19 @@ public class UserService implements UserDetailsService {
 		return new LoginUser(user);
 	}
 
-	// パスワードトークン作成 + メール送信
-	public String sendResetMail(User form) {
-		UUID uuid = UUID.randomUUID();
-		String token = uuid.toString();
+	// パスワード認証トークン作成 + メール送信
+	public void sendResetMail(User form) {
 		if(commonMapper.isExistEmail(form.getEmail())) {
+			String token = common.generatePassword();
 			userMapper.updateToken(token, form.getId());
 			SimpleMailMessage message = new SimpleMailMessage();
 			message.setTo(form.getEmail());
 			message.setSubject("パスワード再設定の手続き");
 			message.setText("パスワード再設定の認証メールをお送りいたしました。"
-					+ "下記URLよりユーザー認証を行ってください。"
-					+ "http://localhost:8080/users/token/" + token);
+					+ "下記トークンを使用してパスワード更新を完了してください"
+					+ "認証トークン：" + token);
 			mailSender.send(message);
 		}
-		return token;
 	}
 
 	// 新パスワード送信
@@ -101,8 +103,26 @@ public class UserService implements UserDetailsService {
 		}
 	}
 
+	// ユーザー更新認証トークン作成 + メール送信
+	public void sendEditMail(User form) {
+		if(commonMapper.isExistEmail(form.getEmail())) {
+			String token = common.generatePassword();
+			userMapper.updateToken(token, form.getId());
+			SimpleMailMessage message = new SimpleMailMessage();
+			message.setTo(form.getEmail());
+			message.setSubject("パスワード再設定の手続き");
+			message.setText("ユーザー情報更新用の認証メールをお送りいたしました。"
+					+ "発行されたトークンを使用してユーザー情報更新を完了してください"
+					+ "認証トークン：" + token);
+			mailSender.send(message);
+		}
+	}
+
 	// プロフィール編集
 	public void updateUser(User form) {
-		userMapper.updateUser(form.getName(), form.getEmail(), form.getId());
+		if(commonMapper.isExistToken(form.getToken())) {
+			userMapper.updateUser(form.getName(), form.getEmail(), form.getId());
+			userMapper.deleteToken(form.getId());
+		}
 	}
 }

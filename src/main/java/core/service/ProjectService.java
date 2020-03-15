@@ -47,7 +47,7 @@ public class ProjectService {
 	}
 
 	public void updateProject(Project form) {
-		projectMapper.updateProject(form.getTitle(), form.getDiscription(), form.getAdministratorId());
+		projectMapper.updateProject(form.getTitle(), form.getDiscription(), form.getId());
 	}
 
 	public void deleteProject(long projectId) {

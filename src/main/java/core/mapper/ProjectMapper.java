@@ -47,7 +47,7 @@ public interface ProjectMapper {
 	@Insert("INSERT INTO projects "
 			+ "(title, discription, administratorId) "
 			+ "VALUES "
-			+ "(#{title}, #{discription}, #{administratorId}")
+			+ "(#{title}, #{discription}, #{administratorId})")
 	public void insertProject(@Param("title") String title, @Param("discription") String discription,
 							@Param("administratorId") long administratorId);
 

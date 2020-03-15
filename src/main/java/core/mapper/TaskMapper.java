@@ -33,7 +33,7 @@ public interface TaskMapper {
 	@Select("SELECT childTasks.id, childTasks.parentTaskId, childTasks.title AS parentTaskTitle, childTasks.content, childTasks.creatorId, users.name AS creatorName, childTasks.progressStatus, childTasks.createdDate, childTasks.updatedDate "
 			+ "FROM childTasks "
 			+ "INNER JOIN users "
-			+ "ON parentTasks.creatorId = users.id "
+			+ "ON childTasks.creatorId = users.id "
 			+ "INNER JOIN parentTasks "
 			+ "ON parentTasks.id = childTasks.parentTaskId "
 			+ "WHERE childTasks.id = #{id}")
@@ -46,7 +46,7 @@ public interface TaskMapper {
 
 	// 子タスク作成
 	@Insert("INSERT INTO childTasks (parentTaskId, title, content, creatorId) "
-			+ "VALUES (#{projectId}, #{title}, #{content}, #{creatorId})")
+			+ "VALUES (#{parentTaskId}, #{title}, #{content}, #{creatorId})")
 	public void insertChildTask(@Param("parentTaskId")long parentTaskId, @Param("title")String title, @Param("content")String content, @Param("creatorId")long creatorId);
 
 	// 親タスク編集

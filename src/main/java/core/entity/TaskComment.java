@@ -9,7 +9,6 @@ public class TaskComment {
 
 	private long id;
 	private long childTaskId;
-	private String title;
 	private String content;
 	private long creatorId;
 	private String creatorName;

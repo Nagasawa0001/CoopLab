@@ -64,16 +64,30 @@ public class UserController {
 	}
 
 	// パスワード再設定の認証メール送信
-	@PostMapping("/reset/mail")
+	@PatchMapping("/reset/mail")
 	@ResponseStatus(HttpStatus.CREATED)
-	public String sendResetMail(@RequestBody @Validated User form) {
-		return userService.sendResetMail(form);
+	public void sendResetMail(@RequestBody @Validated User form) {
+		userService.sendResetMail(form);
 	}
 
 	// パスワード更新処理
 	@PatchMapping("/reset/token/{token}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void updatePassword(@RequestBody @Validated User form) {
-		userService.updatePassword(form);;
+		userService.updatePassword(form);
+	}
+
+	// ユーザー情報更新の認証メール送信
+	@PatchMapping("/edit/mail")
+	@ResponseStatus(HttpStatus.CREATED)
+	public void sendEditMail(@RequestBody @Validated User form) {
+		userService.sendResetMail(form);
+	}
+
+	// ユーザー情報更新処理
+	@PatchMapping("/edit/token/{token}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void updateEditword(@RequestBody @Validated User form) {
+		userService.updatePassword(form);
 	}
 }
