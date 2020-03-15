@@ -5,11 +5,14 @@ import java.sql.Timestamp;
 import lombok.Data;
 
 @Data
-public class Comment {
+public class Message {
 
 	private long id;
+	private long toUserId;
+	private long fromUserId;
+	private String title;
 	private String content;
 	private long projectId;
-	private long projectMemberId;
 	private Timestamp createdDate;
+	private boolean isConfirmed;
 }

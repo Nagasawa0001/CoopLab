@@ -5,16 +5,16 @@ import java.sql.Timestamp;
 import lombok.Data;
 
 @Data
-public class Project {
+public class ParentTask {
 
 	private long id;
+	private long projectId;
 	private String title;
-	private String discription;
-	private long currentUser;
-	private long administratorId;
-	private String administratorName;
+	private String content;
+	private long creatorId;
+	private String creatorName;
 	private long progressStatus;
-	private boolean isAccepted;
+	private long status;
 	private Timestamp createdDate;
 	private Timestamp updatedDate;
 }
