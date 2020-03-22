@@ -36,58 +36,58 @@ public class UserController {
 	}
 
 	// 一時ユーザー登録
-	@PostMapping("/temp")
-	@ResponseStatus(HttpStatus.CREATED)
-	public void postTempUser(@RequestBody @Validated TempUser form) {
-		userService.createTempUser(form);
+	@PostMapping("/signup/temp")
+	@ResponseStatus(HttpStatus.OK)
+	public String postTempUser(@RequestBody @Validated TempUser form) {
+		return userService.createTempUser(form);
 	}
 
-	// ユーザー登録認証メールクリック時
-	@GetMapping("/validate/{uuid}")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void postUser(@PathVariable(name = "uuid", required = false) String uuid) {
-		userService.createUser(uuid);
+	// ユーザー登録認証トークン入力
+	@PostMapping("/validate/{token}")
+	@ResponseStatus(HttpStatus.OK)
+	public boolean postUser(@PathVariable(name = "token", required = false) String token) {
+		return userService.createUser(token);
 	}
 
 	// ユーザー削除
 	@DeleteMapping("/{id}")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@ResponseStatus(HttpStatus.OK)
 	public void deleteUser(@RequestBody @Validated long id) {
 		userService.deleteUser(id);
 	}
 
 	// ユーザー編集
 	@PatchMapping
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void updateUser(@RequestBody @Validated User form) {
-		userService.updateUser(form);
+	@ResponseStatus(HttpStatus.OK)
+	public boolean updateUser(@RequestBody @Validated User form) {
+		return userService.updateUser(form);
 	}
 
 	// パスワード再設定の認証メール送信
 	@PatchMapping("/reset/mail")
-	@ResponseStatus(HttpStatus.CREATED)
-	public void sendResetMail(@RequestBody @Validated User form) {
-		userService.sendResetMail(form);
+	@ResponseStatus(HttpStatus.OK)
+	public boolean sendResetMail(@RequestBody @Validated User form) {
+		return userService.sendResetMail(form);
 	}
 
 	// パスワード更新処理
-	@PatchMapping("/reset/token/{token}")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void updatePassword(@RequestBody @Validated User form) {
-		userService.updatePassword(form);
+	@PatchMapping("/reset/password/token/{token}")
+	@ResponseStatus(HttpStatus.OK)
+	public boolean updatePassword(@RequestBody @Validated User form) {
+		return userService.updatePassword(form);
 	}
 
 	// ユーザー情報更新の認証メール送信
 	@PatchMapping("/edit/mail")
-	@ResponseStatus(HttpStatus.CREATED)
-	public void sendEditMail(@RequestBody @Validated User form) {
-		userService.sendResetMail(form);
+	@ResponseStatus(HttpStatus.OK)
+	public boolean sendEditMail(@RequestBody @Validated User form) {
+		return userService.sendResetMail(form);
 	}
 
 	// ユーザー情報更新処理
 	@PatchMapping("/edit/token/{token}")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void updateEditword(@RequestBody @Validated User form) {
-		userService.updatePassword(form);
+	@ResponseStatus(HttpStatus.OK)
+	public boolean updateEditword(@RequestBody @Validated User form) {
+		return userService.updatePassword(form);
 	}
 }

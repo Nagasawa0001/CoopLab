@@ -15,6 +15,8 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import core.exception.AuthenticationFailureHandlerImpl;
 import core.exception.AuthenticationSuccessHandlerImpl;
@@ -53,7 +55,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //This one is REST-specific addition to default one, that is based on PathRequest
         .defaultAuthenticationEntryPointFor(getRestAuthenticationEntryPoint(), new AntPathRequestMatcher("/**"));
 
+		http.cors().configurationSource(configurationSource());
 
+	}
+
+	private UrlBasedCorsConfigurationSource configurationSource() {
+		CorsConfiguration corsConfiguration = new CorsConfiguration();
+		corsConfiguration.addAllowedMethod(CorsConfiguration.ALL);
+		corsConfiguration.addAllowedHeader(CorsConfiguration.ALL);
+		corsConfiguration.addAllowedOrigin("http://localhost:3000");
+		corsConfiguration.setAllowCredentials(true);
+
+		var corsConfigurationSource = new UrlBasedCorsConfigurationSource();
+		corsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
+		return corsConfigurationSource;
 	}
 
 	@Autowired

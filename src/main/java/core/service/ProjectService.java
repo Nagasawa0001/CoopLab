@@ -2,6 +2,7 @@ package core.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import core.entity.Project;
 import core.entity.join.ProjectMessage;
@@ -11,6 +12,7 @@ import core.mapper.ProjectMapper;
 import core.mapper.TaskMapper;
 
 @Service
+@Transactional
 public class ProjectService {
 	@Autowired
 	ProjectMapper projectMapper;

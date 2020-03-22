@@ -2,6 +2,7 @@ package core.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import core.entity.ChildTask;
 import core.entity.ParentTask;
@@ -11,6 +12,7 @@ import core.mapper.TaskCommentMapper;
 import core.mapper.TaskMapper;
 
 @Service
+@Transactional
 public class TaskService {
 
 	@Autowired
