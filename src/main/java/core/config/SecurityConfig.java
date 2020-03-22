@@ -1,5 +1,7 @@
 package core.config;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -38,8 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .passwordParameter("password")
             .successHandler(authenticationSuccessHandler())
             .failureHandler(authenticationFailureHandler())
-//            .successHandler(authenticationSuccessHandler())
-//            .failureHandler(authenticationFailureHandler())
+
         .and()
         // LOGOUT
         .logout()
@@ -56,15 +57,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .defaultAuthenticationEntryPointFor(getRestAuthenticationEntryPoint(), new AntPathRequestMatcher("/**"));
 
 		http.cors().configurationSource(configurationSource());
-
 	}
 
 	private UrlBasedCorsConfigurationSource configurationSource() {
 		CorsConfiguration corsConfiguration = new CorsConfiguration();
 		corsConfiguration.addAllowedMethod(CorsConfiguration.ALL);
 		corsConfiguration.addAllowedHeader(CorsConfiguration.ALL);
-		corsConfiguration.addAllowedOrigin("http://localhost:3000");
+		corsConfiguration.addAllowedOrigin("*");
 		corsConfiguration.setAllowCredentials(true);
+		corsConfiguration.setExposedHeaders(Arrays.asList("userId", "Access-Control-Allow-Headers", "Authorization, x-xsrf-token, Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, " +
+	            "Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"));
 
 		var corsConfigurationSource = new UrlBasedCorsConfigurationSource();
 		corsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);

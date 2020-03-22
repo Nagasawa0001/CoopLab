@@ -12,6 +12,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+import core.entity.LoginUser;
+import core.entity.User;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -25,10 +27,10 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
             log.info("Response has already been committed.");
             return;
         }
-
+        User user = ((User)((LoginUser)auth.getPrincipal()).getUser());
         response.setStatus(HttpStatus.OK.value());
+        response.setHeader("userId", Long.toString(user.getId()));
         clearAuthenticationAttributes(request);
-        System.out.println(response);
     }
 
     /**

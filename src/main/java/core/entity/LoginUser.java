@@ -19,6 +19,7 @@ public class LoginUser implements UserDetails {
 	public LoginUser(User user) {
 		this.user = user;
 	}
+	
 
 
 	@Override
