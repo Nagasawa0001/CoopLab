@@ -21,7 +21,7 @@ public interface ProjectMapper {
 			+ "ON projects.id = users_projects.projectId "
 			+ "INNER JOIN users "
 			+ "ON users_projects.userId = users.id "
-			+ "WHERE users_projects.userId = #{userId}")
+			+ "WHERE users_projects.userId = #{userId} AND users_projects.isAccepted = true")
 	public List<Project> selectProjectList(@Param("userId")long userId);
 
 	//プロジェクト詳細を取得（ユーザー名も取得）
@@ -50,6 +50,14 @@ public interface ProjectMapper {
 			+ "(#{title}, #{discription}, #{administratorId})")
 	public void insertProject(@Param("title") String title, @Param("discription") String discription,
 							@Param("administratorId") long administratorId);
+
+	//登録したプロジェクトID, 作成者IDを取得
+			@Select("SELECT id FROM projects WHERE administratorId=#{administratorId} ORDER BY id DESC LIMIT 1")
+			public long selectProjectId(@Param("administratorId") long administratorId);
+
+	//projects, users中間テーブルに登録
+		@Insert("INSERT users_projects (userId, projectId, isAccepted) VALUES (#{projectId}, #{administratorId}, true)")
+		public void insertUsersProjects(@Param("projectId")long projectId, @Param("administratorId") long administratorId);
 
 	//プロジェクト削除
 	@Delete("DELETE FROM projects WHERE id = #{id}")

@@ -30,7 +30,7 @@ public interface TaskMapper {
 	List<ChildTask> selectChildTaskList(@Param("parentTaskId") long parentTaskId);
 
 	// 子タスク詳細取得
-	@Select("SELECT childTasks.id, childTasks.parentTaskId, childTasks.title AS parentTaskTitle, childTasks.content, childTasks.creatorId, users.name AS creatorName, childTasks.progressStatus, childTasks.createdDate, childTasks.updatedDate "
+	@Select("SELECT childTasks.id, childTasks.parentTaskId, childTasks.title, childTasks.content, childTasks.creatorId, users.name AS creatorName, childTasks.progressStatus, childTasks.createdDate, childTasks.updatedDate "
 			+ "FROM childTasks "
 			+ "INNER JOIN users "
 			+ "ON childTasks.creatorId = users.id "

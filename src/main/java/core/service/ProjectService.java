@@ -46,6 +46,8 @@ public class ProjectService {
 
 	public void createProject(Project form) {
 		projectMapper.insertProject(form.getTitle(), form.getDiscription(), form.getAdministratorId());
+		long projectId = projectMapper.selectProjectId(form.getAdministratorId());
+		//projectMapper.insertUsersProjects(projectId, form.getAdministratorId());
 	}
 
 	public void updateProject(Project form) {
