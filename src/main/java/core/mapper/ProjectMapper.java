@@ -56,7 +56,7 @@ public interface ProjectMapper {
 			public long selectProjectId(@Param("administratorId") long administratorId);
 
 	//projects, users中間テーブルに登録
-		@Insert("INSERT users_projects (userId, projectId, isAccepted) VALUES (#{projectId}, #{administratorId}, true)")
+		@Insert("INSERT INTO users_projects (userId, projectId, isAccepted) VALUES (#{administratorId}, #{projectId}, true)")
 		public void insertUsersProjects(@Param("projectId")long projectId, @Param("administratorId") long administratorId);
 
 	//プロジェクト削除
