@@ -22,10 +22,10 @@ public class TaskService {
 	TaskCommentMapper taskCommentMapper;
 
 	// 親タスク詳細取得
-	public ParentTaskChildTask getParentTask(long parentTaskId) {
+	public ParentTaskChildTask getParentTask(long parentTaskId, long status) {
 		ParentTaskChildTask taskInfo = new ParentTaskChildTask();
 		taskInfo.setParentTask(taskMapper.selectParentTask(parentTaskId));
-		taskInfo.setChildTaskList(taskMapper.selectChildTaskList(parentTaskId));
+		taskInfo.setChildTaskList(taskMapper.selectChildTaskList(parentTaskId, status));
 		return taskInfo;
 	}
 

@@ -38,7 +38,7 @@ public class ProjectController {
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
 	public ProjectParentTask getProjectDetail(@RequestParam(name = "id", required = false)long id) {
-		return projectService.getProjectDetail(id);
+		return projectService.getProjectDetail(id, 0);
 	}
 
 	// プロジェクト名前検索

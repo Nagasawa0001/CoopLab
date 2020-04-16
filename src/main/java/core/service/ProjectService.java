@@ -30,10 +30,10 @@ public class ProjectService {
 		return listInfo;
 	}
 
-	public ProjectParentTask getProjectDetail(long projectId) {
+	public ProjectParentTask getProjectDetail(long projectId, long status) {
 		ProjectParentTask projectDetailInfo = new ProjectParentTask();
 		projectDetailInfo.setProject(projectMapper.selectProjectDetail(projectId));
-		projectDetailInfo.setParentTasks(taskMapper.selectParentTaskList(projectId));
+		projectDetailInfo.setParentTasks(taskMapper.selectParentTaskList(projectId, status));
 		return projectDetailInfo;
 	}
 

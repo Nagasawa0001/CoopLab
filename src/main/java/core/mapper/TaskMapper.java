@@ -14,8 +14,8 @@ import core.entity.ParentTask;
 @Mapper
 public interface TaskMapper {
 	//親タスク一覧を取得
-	@Select("SELECT * FROM parentTasks WHERE projectId = #{projectId}")
-	List<ParentTask> selectParentTaskList(@Param("projectId") long projectId);
+	@Select("SELECT * FROM parentTasks WHERE projectId = #{projectId} AND status = #{status}")
+	List<ParentTask> selectParentTaskList(@Param("projectId") long projectId, @Param("status") long status);
 
 	// 親タスク詳細取得
 	@Select("SELECT parentTasks.id, parentTasks.projectId, parentTasks.title, parentTasks.content, parentTasks.creatorId, users.name AS creatorName, parentTasks.progressStatus, parentTasks.createdDate, parentTasks.updatedDate "
@@ -26,8 +26,8 @@ public interface TaskMapper {
 	ParentTask selectParentTask(@Param("id") long id);
 
 	// 子タスク一覧取得
-	@Select("SELECT * FROM childTasks WHERE parentTaskId = #{parentTaskId}")
-	List<ChildTask> selectChildTaskList(@Param("parentTaskId") long parentTaskId);
+	@Select("SELECT * FROM childTasks WHERE parentTaskId = #{parentTaskId} AND status = #{status}")
+	List<ChildTask> selectChildTaskList(@Param("parentTaskId") long parentTaskId, @Param("status") long status);
 
 	// 子タスク詳細取得
 	@Select("SELECT childTasks.id, childTasks.parentTaskId, childTasks.title, childTasks.content, childTasks.creatorId, users.name AS creatorName, childTasks.progressStatus, childTasks.createdDate, childTasks.updatedDate "
@@ -59,7 +59,7 @@ public interface TaskMapper {
 
 	// 親タスク更新（Done or Cancel）
 	@Update("UPDATE parentTasks SET status = #{status} WHERE id = #{id}")
-	public void updateParentTaskStatus(@Param("status") long status, @Param("id")long id);
+	public void updateParentTaskStatus(@Param("id")long id, @Param("status") long status);
 
 	// 子タスク更新（Done or Cancel）
 	@Update("UPDATE childTasks SET status = #{status} WHERE id = #{id}")
