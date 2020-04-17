@@ -64,6 +64,7 @@ public class TaskService {
 
 	// 子タスクステータス更新(Done or Cancel)
 	public void updateChildTaskStatus(ChildTask form) {
-		taskMapper.updateChildTaskStatus(form.getStatus(), form.getId());
+		System.out.println(form);
+		taskMapper.updateChildTaskStatus(form.getId(), form.getStatus());
 	}
 }

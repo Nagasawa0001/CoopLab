@@ -63,7 +63,7 @@ public interface TaskMapper {
 
 	// 子タスク更新（Done or Cancel）
 	@Update("UPDATE childTasks SET status = #{status} WHERE id = #{id}")
-	public void updateChildTaskStatus(@Param("status") long status, @Param("id")long id);
+	public void updateChildTaskStatus(@Param("id")long id, @Param("status") long status);
 
 	// 親タスク進捗ステータス更新
 	@Update("UPDATE parentTasks SET progressStatus = #{progressStatus} WHERE id = #{id}")
