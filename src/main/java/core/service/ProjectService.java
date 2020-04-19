@@ -2,6 +2,7 @@ package core.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import core.entity.Project;
 import core.entity.join.ProjectMessage;
@@ -11,6 +12,7 @@ import core.mapper.ProjectMapper;
 import core.mapper.TaskMapper;
 
 @Service
+@Transactional
 public class ProjectService {
 	@Autowired
 	ProjectMapper projectMapper;
@@ -28,10 +30,10 @@ public class ProjectService {
 		return listInfo;
 	}
 
-	public ProjectParentTask getProjectDetail(long projectId) {
+	public ProjectParentTask getProjectDetail(long projectId, long status) {
 		ProjectParentTask projectDetailInfo = new ProjectParentTask();
 		projectDetailInfo.setProject(projectMapper.selectProjectDetail(projectId));
-		projectDetailInfo.setParentTasks(taskMapper.selectParentTaskList(projectId));
+		projectDetailInfo.setParentTasks(taskMapper.selectParentTaskList(projectId, status));
 		return projectDetailInfo;
 	}
 
@@ -44,6 +46,8 @@ public class ProjectService {
 
 	public void createProject(Project form) {
 		projectMapper.insertProject(form.getTitle(), form.getDiscription(), form.getAdministratorId());
+		long projectId = projectMapper.selectProjectId(form.getAdministratorId());
+		projectMapper.insertUsersProjects(projectId, form.getAdministratorId());
 	}
 
 	public void updateProject(Project form) {

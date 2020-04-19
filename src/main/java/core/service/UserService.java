@@ -1,7 +1,6 @@
 package core.service;
 
 import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
@@ -43,30 +42,31 @@ public class UserService implements UserDetailsService {
 		return userMapper.selectUser(id);
 	}
 
-	public void createTempUser(TempUser form) {
-		if(commonMapper.isExistEmail(form.getEmail())) {
-			UUID uuid = UUID.randomUUID();
-			String strUUID = uuid.toString();
-
-			userMapper.insertTempUser(form.getName(), form.getEmail(), passwordEncoder.encode(form.getPassword()), strUUID);
-
+	public String createTempUser(TempUser form) {
+		if(!commonMapper.isExistEmailTemp(form.getEmail())) {
+			String token = common.generatePassword();
+			userMapper.insertTempUser(form.getName(), form.getEmail(), passwordEncoder.encode(form.getPassword()), token);
 			SimpleMailMessage message = new SimpleMailMessage();
 			message.setTo(form.getEmail());
-			message.setSubject("ユーザー登録の手続き");
-			message.setText("ご登録いただいたメールアドレスへ認証メールをお送りいたしました。"
-					+ "下記URLよりユーザー認証を行ってください。"
-					+ "http://localhost:8080/users/validate/" + strUUID);
+			message.setSubject("CoopLab:ユーザー登録");
+			message.setText("ユーザー情報更新用の認証メールをお送りいたしました。"
+					+ "発行されたトークンを使用してユーザー登録を完了してください"
+					+ "認証トークン：" + token);
 			mailSender.send(message);
+			return token;
+		} else {
+			return null;
 		}
 	}
 
-	public void createUser(String uuid) {
-		TempUser tempUser = userMapper.selectTempUser(uuid);
+	public boolean createUser(String token) {
+		TempUser tempUser = userMapper.selectTempUser(token);
 		if(tempUser != null) {
 			userMapper.insertUser(tempUser.getName(), tempUser.getEmail(), tempUser.getPassword());
-			userMapper.deleteTempUser(uuid);
+			userMapper.deleteTempUser(token);
+			return true;
 		} else {
-			throw new RuntimeException();
+			return false;
 		}
 	}
 
@@ -81,48 +81,60 @@ public class UserService implements UserDetailsService {
 	}
 
 	// パスワード認証トークン作成 + メール送信
-	public void sendResetMail(User form) {
+	public boolean sendResetMail(User form) {
 		if(commonMapper.isExistEmail(form.getEmail())) {
 			String token = common.generatePassword();
 			userMapper.updateToken(token, form.getId());
 			SimpleMailMessage message = new SimpleMailMessage();
 			message.setTo(form.getEmail());
-			message.setSubject("パスワード再設定の手続き");
+			message.setSubject("CoopLab:パスワード再設定");
 			message.setText("パスワード再設定の認証メールをお送りいたしました。"
 					+ "下記トークンを使用してパスワード更新を完了してください"
 					+ "認証トークン：" + token);
 			mailSender.send(message);
+			return true;
+		} else {
+			return false;
 		}
 	}
 
 	// 新パスワード送信
-	public void updatePassword(User form) {
+	public boolean updatePassword(User form) {
 		if(commonMapper.isExistToken(form.getToken())) {
 			userMapper.updatePassword(form.getPassword(), form.getToken());
 			userMapper.deleteToken(form.getId());
+			return true;
+		} else {
+			return false;
 		}
 	}
 
 	// ユーザー更新認証トークン作成 + メール送信
-	public void sendEditMail(User form) {
+	public boolean sendEditMail(User form) {
 		if(commonMapper.isExistEmail(form.getEmail())) {
 			String token = common.generatePassword();
 			userMapper.updateToken(token, form.getId());
 			SimpleMailMessage message = new SimpleMailMessage();
 			message.setTo(form.getEmail());
-			message.setSubject("パスワード再設定の手続き");
+			message.setSubject("CoopLab:パスワード情報変更");
 			message.setText("ユーザー情報更新用の認証メールをお送りいたしました。"
 					+ "発行されたトークンを使用してユーザー情報更新を完了してください"
 					+ "認証トークン：" + token);
 			mailSender.send(message);
+			return true;
+		} else {
+			return false;
 		}
 	}
 
 	// プロフィール編集
-	public void updateUser(User form) {
+	public boolean updateUser(User form) {
 		if(commonMapper.isExistToken(form.getToken())) {
 			userMapper.updateUser(form.getName(), form.getEmail(), form.getId());
 			userMapper.deleteToken(form.getId());
+			return true;
+		} else {
+			return false;
 		}
 	}
 }

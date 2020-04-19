@@ -14,4 +14,5 @@ public class User {
 	private Timestamp createdDate;
 	private Timestamp updatedDate;
 	private String token;
+	private String jsessionId;
 }

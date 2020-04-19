@@ -2,12 +2,14 @@ package core.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import core.entity.Message;
 import core.mapper.MessageMapper;
 import core.mapper.ProjectMapper;
 
 @Service
+@Transactional
 public class MessageService {
 	@Autowired
 	MessageMapper messageMapper;

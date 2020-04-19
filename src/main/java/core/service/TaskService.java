@@ -2,6 +2,7 @@ package core.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import core.entity.ChildTask;
 import core.entity.ParentTask;
@@ -11,6 +12,7 @@ import core.mapper.TaskCommentMapper;
 import core.mapper.TaskMapper;
 
 @Service
+@Transactional
 public class TaskService {
 
 	@Autowired
@@ -20,10 +22,10 @@ public class TaskService {
 	TaskCommentMapper taskCommentMapper;
 
 	// 親タスク詳細取得
-	public ParentTaskChildTask getParentTask(long parentTaskId) {
+	public ParentTaskChildTask getParentTask(long parentTaskId, long status) {
 		ParentTaskChildTask taskInfo = new ParentTaskChildTask();
 		taskInfo.setParentTask(taskMapper.selectParentTask(parentTaskId));
-		taskInfo.setChildTaskList(taskMapper.selectChildTaskList(parentTaskId));
+		taskInfo.setChildTaskList(taskMapper.selectChildTaskList(parentTaskId, status));
 		return taskInfo;
 	}
 
@@ -62,6 +64,7 @@ public class TaskService {
 
 	// 子タスクステータス更新(Done or Cancel)
 	public void updateChildTaskStatus(ChildTask form) {
-		taskMapper.updateChildTaskStatus(form.getStatus(), form.getId());
+		System.out.println(form);
+		taskMapper.updateChildTaskStatus(form.getId(), form.getStatus());
 	}
 }

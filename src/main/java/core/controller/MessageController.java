@@ -25,6 +25,7 @@ public class MessageController {
 	@PatchMapping
 	@ResponseStatus(HttpStatus.OK)
 	public void updateMessageStatus(@RequestBody @Validated Message form) {
+		System.out.println(form);
 		messageService.updateMessageStatus(form);
 	}
 }

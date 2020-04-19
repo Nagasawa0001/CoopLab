@@ -1,5 +1,7 @@
 package core.config;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +17,8 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import core.exception.AuthenticationFailureHandlerImpl;
 import core.exception.AuthenticationSuccessHandlerImpl;
@@ -36,8 +40,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .passwordParameter("password")
             .successHandler(authenticationSuccessHandler())
             .failureHandler(authenticationFailureHandler())
-//            .successHandler(authenticationSuccessHandler())
-//            .failureHandler(authenticationFailureHandler())
         .and()
         // LOGOUT
         .logout()
@@ -53,7 +55,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //This one is REST-specific addition to default one, that is based on PathRequest
         .defaultAuthenticationEntryPointFor(getRestAuthenticationEntryPoint(), new AntPathRequestMatcher("/**"));
 
+		http.cors().configurationSource(configurationSource());
 
+		http.sessionManagement().maximumSessions(1);
+	}
+
+	private UrlBasedCorsConfigurationSource configurationSource() {
+		CorsConfiguration corsConfiguration = new CorsConfiguration();
+		corsConfiguration.addAllowedMethod(CorsConfiguration.ALL);
+		corsConfiguration.addAllowedHeader(CorsConfiguration.ALL);
+		corsConfiguration.addAllowedOrigin("*");
+		corsConfiguration.setAllowCredentials(true);
+		corsConfiguration.setExposedHeaders(Arrays.asList("Access-Control-Expose-Headers", "Cookie", "Access-Control-Allow-Headers", "Authorization, x-xsrf-token, Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, " +
+	            "Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"));
+
+		var corsConfigurationSource = new UrlBasedCorsConfigurationSource();
+		corsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
+		return corsConfigurationSource;
 	}
 
 	@Autowired
